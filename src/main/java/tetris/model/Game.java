@@ -68,9 +68,12 @@ public class Game {
      */
     private void handleEvent(ActionEvent event) {
         switch (event) {
-            case MOVE_DOWN -> figure.rotate(1);
-            case MOVE_LEFT -> figure.move(1, 2);
-            case MOVE_RIGHT -> figure.move(1, 2);
+            case MOVE_DOWN -> figure.move(0, -1);
+            case MOVE_LEFT -> figure.move(-1, 0);
+            case MOVE_RIGHT -> figure.move(1, 0);
+            case ROTATE_LEFT -> figure.rotate(1);
+            case ROTATE_RIGHT -> figure.rotate(-1);
+
         }
         updateGUI();
     }
@@ -80,6 +83,6 @@ public class Game {
      */
     private void updateGUI() {
         gui.clear();
-        gui.drawBlocks(figure.blocks);
+        gui.drawBlocks(figure.getBlocks());
     }
 }

@@ -21,7 +21,7 @@ public class Figure {
     /**
      * The blocks of the figure.
      */
-    public final Block[] blocks;
+    private final Block[] blocks = new Block[4];
 
     /**
      * The Color of the figure.
@@ -31,12 +31,10 @@ public class Figure {
     public Figure(int x, int y) {
         this.x = x;
         this.y = y;
-        this.blocks = new Block[]{
-                new Block(x - 1, y, COLOR),
-                new Block(x, y, COLOR),
-                new Block(x + 1, y, COLOR),
-                new Block(x + 2, y, COLOR)
-        };
+        blocks[0] = new Block(x - 1, y, COLOR);
+        blocks[1] = new Block(x, y, COLOR);
+        blocks[2] = new Block(x + 1, y, COLOR);
+        blocks[3] = new Block(x + 2, y, COLOR);
     }
 
     /**
@@ -51,6 +49,15 @@ public class Figure {
      * Moves the figure in the specified direction.
      */
     public void move(int dx, int dy) {
+
+
+        /*
+        for(Block blocks : blocks) {
+            block.x += dx;
+            block.x += dy;
+        }
+
+         */
     }
 
     /**
