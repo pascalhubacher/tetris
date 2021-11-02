@@ -1,9 +1,6 @@
 package tetris.model;
 
 import tetris.gui.Block;
-import tetris.gui.GUI;
-
-import java.util.Random;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -30,11 +27,18 @@ public class Figure {
 
     public Figure(int x, int y) {
         this.x = x;
+        y -= 3;
         this.y = y;
+        // I
         blocks[0] = new Block(x - 1, y, COLOR);
         blocks[1] = new Block(x, y, COLOR);
         blocks[2] = new Block(x + 1, y, COLOR);
         blocks[3] = new Block(x + 2, y, COLOR);
+        // S
+        blocks[0] = new Block(x - 1, y, COLOR);
+        blocks[1] = new Block(x, y, COLOR);
+        blocks[2] = new Block(x, y + 1, COLOR);
+        blocks[3] = new Block(x + 1, y + 1, COLOR);
     }
 
     /**
@@ -49,21 +53,25 @@ public class Figure {
      * Moves the figure in the specified direction.
      */
     public void move(int dx, int dy) {
-
-
-        /*
-        for(Block blocks : blocks) {
+        for (Block block : blocks) {
             block.x += dx;
             block.x += dy;
         }
-
-         */
     }
 
     /**
      * Rotates the figure.
      */
     public void rotate(int d) {
+        for (Block block : blocks) {
+            // [x y] = [y -x] vector turned 90 degrees
+            // turned around block 2 block[1]
+            int tempBlock = blocks[1].y - (block.x - blocks[1].x);
+            block.x = (block.y - blocks[1].y)+blocks[1].x;
+            block.y = tempBlock;
+
+        }
+
     }
 
 

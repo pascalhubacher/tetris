@@ -1,7 +1,6 @@
 package tetris.model;
 
 import tetris.gui.ActionEvent;
-import tetris.gui.Block;
 import tetris.gui.GUI;
 
 /**
@@ -73,8 +72,8 @@ public class Game {
             case MOVE_RIGHT -> figure.move(1, 0);
             case ROTATE_LEFT -> figure.rotate(1);
             case ROTATE_RIGHT -> figure.rotate(-1);
-
         }
+        System.out.println(event);
         updateGUI();
     }
 
