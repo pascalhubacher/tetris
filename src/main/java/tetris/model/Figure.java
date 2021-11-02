@@ -51,21 +51,25 @@ public class Figure {
     }
 
     /**
-     * Rotates the figure.
+     * Rotates the figure 90 degrees.
+     * Every figure is looked at as 3 block vectors around a certain block(block[1])
+     * [x y] = [y -x] vector turned 90 degrees
+     * turned around block 2 block[1]
+     * the block vector is calculated like this:
+     * x = (y - reference block y) + .x
+     * y = reference block y - (x - reference block x)
      */
     public void rotate(int d) {
-        switch (d){
+        switch (d) {
             case 1 -> {
                 for (Block block : blocks) {
-                    // [x y] = [y -x] vector turned 90 degrees
-                    // turned around block 2 block[1]
                     int tempBlock = blocks[1].y - (block.x - blocks[1].x);
-                    block.x = (block.y - blocks[1].y)+blocks[1].x;
+                    block.x = (block.y - blocks[1].y) + blocks[1].x;
                     block.y = tempBlock;
                 }
             }
             case -1 -> {
-
+                // missing
             }
         }
     }
