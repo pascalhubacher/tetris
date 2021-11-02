@@ -73,7 +73,6 @@ public class Game {
             case ROTATE_LEFT -> figure.rotate(1);
             case ROTATE_RIGHT -> figure.rotate(-1);
         }
-        System.out.println(event);
         updateGUI();
     }
 

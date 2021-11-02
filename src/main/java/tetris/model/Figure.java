@@ -5,15 +5,6 @@ import tetris.gui.Block;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Figure {
-    /**
-     * The x value of the field.
-     */
-    private final int x;
-
-    /**
-     * The y value of the field.
-     */
-    private final int y;
 
     /**
      * The blocks of the figure.
@@ -26,14 +17,14 @@ public class Figure {
     private static final int COLOR = ThreadLocalRandom.current().nextInt(0, 6 + 1);
 
     public Figure(int x, int y) {
-        this.x = x;
         y -= 3;
-        this.y = y;
         // I
+        /*
         blocks[0] = new Block(x - 1, y, COLOR);
         blocks[1] = new Block(x, y, COLOR);
         blocks[2] = new Block(x + 1, y, COLOR);
         blocks[3] = new Block(x + 2, y, COLOR);
+        */
         // S
         blocks[0] = new Block(x - 1, y, COLOR);
         blocks[1] = new Block(x, y, COLOR);
@@ -63,15 +54,20 @@ public class Figure {
      * Rotates the figure.
      */
     public void rotate(int d) {
-        for (Block block : blocks) {
-            // [x y] = [y -x] vector turned 90 degrees
-            // turned around block 2 block[1]
-            int tempBlock = blocks[1].y - (block.x - blocks[1].x);
-            block.x = (block.y - blocks[1].y)+blocks[1].x;
-            block.y = tempBlock;
+        switch (d){
+            case 1 -> {
+                for (Block block : blocks) {
+                    // [x y] = [y -x] vector turned 90 degrees
+                    // turned around block 2 block[1]
+                    int tempBlock = blocks[1].y - (block.x - blocks[1].x);
+                    block.x = (block.y - blocks[1].y)+blocks[1].x;
+                    block.y = tempBlock;
+                }
+            }
+            case -1 -> {
 
+            }
         }
-
     }
 
 
