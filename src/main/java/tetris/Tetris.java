@@ -6,8 +6,8 @@ import tetris.model.Game;
 /**
  * The class Tetris implements the main class to start a Tetris game.
  *
- * @author Stephan Fischli
- * @version 2.0
+ * @author Pascal Hubacher
+ * @version 2.1
  */
 public class Tetris {
 
