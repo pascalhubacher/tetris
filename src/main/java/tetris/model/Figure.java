@@ -14,7 +14,7 @@ public class Figure {
     /**
      * The Color of the figure.
      */
-    private static final int COLOR = ThreadLocalRandom.current().nextInt(0, 6 + 1);
+    private final int COLOR = ThreadLocalRandom.current().nextInt(0, 6 + 1);
 
     public Figure(int x, int y) {
         y -= 3;
@@ -46,7 +46,7 @@ public class Figure {
     public void move(int dx, int dy) {
         for (Block block : blocks) {
             block.x += dx;
-            block.x += dy;
+            block.y += dy;
         }
     }
 
