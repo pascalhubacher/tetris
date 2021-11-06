@@ -4,33 +4,26 @@ import tetris.gui.Block;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Figure {
+public abstract class Figure {
 
     /**
      * The blocks of the figure.
      */
-    private final Block[] blocks = new Block[4];
+    public final Block[] blocks = new Block[4];
 
     /**
      * The Color of the figure.
      */
-    private final int COLOR = ThreadLocalRandom.current().nextInt(0, 6 + 1);
+    public final int COLOR = ThreadLocalRandom.current().nextInt(0, 6 + 1);
 
+    /*
     public Figure(int x, int y) {
-        y -= 3;
-        // I
-        /*
-        blocks[0] = new Block(x - 1, y, COLOR);
-        blocks[1] = new Block(x, y, COLOR);
-        blocks[2] = new Block(x + 1, y, COLOR);
-        blocks[3] = new Block(x + 2, y, COLOR);
-        */
         // S
         blocks[0] = new Block(x - 1, y, COLOR);
         blocks[1] = new Block(x, y, COLOR);
         blocks[2] = new Block(x, y + 1, COLOR);
         blocks[3] = new Block(x + 1, y + 1, COLOR);
-    }
+    }*/
 
     /**
      * Gets the blocks of the figure.

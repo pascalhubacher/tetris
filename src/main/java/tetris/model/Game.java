@@ -2,6 +2,7 @@ package tetris.model;
 
 import tetris.gui.ActionEvent;
 import tetris.gui.GUI;
+import tetris.model.figures.*;
 
 /**
  * The class Game implements the Tetris game.
@@ -56,7 +57,9 @@ public class Game {
     }
 
     public void createFigure() {
-        figure = new Figure((width - 1) / 2, height - 1);
+        // create a random figure
+        // figure = new Figure((width - 1) / 2, height - 1);
+        figure = new SFigure((width - 1) / 2, height - 1);
         updateGUI();
     }
 
