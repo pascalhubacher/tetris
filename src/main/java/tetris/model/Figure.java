@@ -2,7 +2,7 @@ package tetris.model;
 
 import tetris.gui.Block;
 
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Random;
 
 public abstract class Figure {
 
@@ -14,16 +14,19 @@ public abstract class Figure {
     /**
      * The Color of the figure.
      */
-    public final int COLOR = ThreadLocalRandom.current().nextInt(0, 6 + 1);
+    public final int COLOR;
 
-    /*
     public Figure(int x, int y) {
+        Random random = new Random();
+        this.COLOR = random.nextInt(0, 7);
+        /*
         // S
         blocks[0] = new Block(x - 1, y, COLOR);
         blocks[1] = new Block(x, y, COLOR);
         blocks[2] = new Block(x, y + 1, COLOR);
         blocks[3] = new Block(x + 1, y + 1, COLOR);
-    }*/
+        */
+    }
 
     /**
      * Gets the blocks of the figure.
