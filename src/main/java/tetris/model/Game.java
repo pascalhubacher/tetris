@@ -85,7 +85,7 @@ public class Game {
             case TFigure -> {figure = new TFigure((width - 1) / 2, height - 1);}
             case ZFigure -> {figure = new ZFigure((width - 1) / 2, height - 1);}
         }
-        figure = new LFigure((width - 1) / 2, height - 1);
+        //figure = new JFigure((width - 1) / 2, height - 1);
         updateGUI();
     }
 
