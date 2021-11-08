@@ -11,4 +11,21 @@ public class JFigure extends Figure {
         blocks[2] = new Block(x + 1, y, COLOR);
         blocks[3] = new Block(x + 1, y - 1, COLOR);
     }
+
+    @Override
+    public void rotate(int d) {
+        System.out.println("test");
+        switch (d) {
+            case 1 -> {
+                for (Block block : blocks) {
+                    int tempBlock = blocks[1].y + 1 - (block.x - blocks[1].x);
+                    block.x = (block.y - blocks[1].y + 1) + blocks[1].x;
+                    block.y = tempBlock;
+                }
+            }
+            case -1 -> {
+                // missing
+            }
+        }
+    }
 }

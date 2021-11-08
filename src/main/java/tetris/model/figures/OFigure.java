@@ -12,4 +12,9 @@ public class OFigure extends Figure {
         blocks[3] = new Block(x, y - 1, COLOR);
 
     }
+
+    @Override
+    public void rotate(int d) {
+        // do nothing
+    }
 }
