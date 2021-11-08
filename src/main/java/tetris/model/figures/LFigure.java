@@ -3,8 +3,6 @@ package tetris.model.figures;
 import tetris.gui.Block;
 import tetris.model.Figure;
 
-import java.util.ArrayList;
-
 public class LFigure extends Figure {
 
     public LFigure(int x, int y) {
