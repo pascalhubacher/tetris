@@ -19,11 +19,7 @@ public class JFigure extends Figure {
 
     @Override
     public void move(int dx, int dy) {
-        //this.move(dx, dy);
-        for (Block block : blocks) {
-            block.x += dx;
-            block.y += dy;
-        }
+        super.move(dx, dy);
         rotateBlock[0] += dx;
         rotateBlock[1] += dy;
     }
