@@ -9,7 +9,7 @@ public abstract class Figure {
     /**
      * The blocks of the figure.
      */
-    public final Block[] blocks = new Block[4];
+    protected final Block[] blocks = new Block[4];
 
     /**
      * The Color of the figure.

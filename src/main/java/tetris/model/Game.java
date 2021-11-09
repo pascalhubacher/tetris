@@ -76,15 +76,15 @@ public class Game {
     public void createFigure() {
         // create a random figure
         //figure = new Figure((width - 1) / 2, height - 1);
-        switch (Figures.getRandomFigure()) {
-            case IFigure -> {figure = new IFigure((width - 1) / 2, height - 1);}
-            case JFigure -> {figure = new JFigure((width - 1) / 2, height - 1);}
-            case LFigure -> {figure = new LFigure((width - 1) / 2, height - 1);}
-            case OFigure -> {figure = new OFigure((width - 1) / 2, height - 1);}
-            case SFigure -> {figure = new SFigure((width - 1) / 2, height - 1);}
-            case TFigure -> {figure = new TFigure((width - 1) / 2, height - 1);}
-            case ZFigure -> {figure = new ZFigure((width - 1) / 2, height - 1);}
-        }
+        figure = switch (Figures.getRandomFigure()) {
+            case IFigure -> new IFigure((width - 1) / 2, height - 1);
+            case JFigure -> new JFigure((width - 1) / 2, height - 1);
+            case LFigure -> new LFigure((width - 1) / 2, height - 1);
+            case OFigure -> new OFigure((width - 1) / 2, height - 1);
+            case SFigure -> new SFigure((width - 1) / 2, height - 1);
+            case TFigure -> new TFigure((width - 1) / 2, height - 1);
+            case ZFigure -> new ZFigure((width - 1) / 2, height - 1);
+        };
         //figure = new JFigure((width - 1) / 2, height - 1);
         updateGUI();
     }
