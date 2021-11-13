@@ -7,6 +7,8 @@ public class LFigure extends Figure {
 
     private int[] rotateBlock = new int[2];
 
+    private final int COLOR = 2;
+
     public LFigure(int x, int y) {
         super(x, y);
         blocks[0] = new Block(x - 1, y, COLOR);

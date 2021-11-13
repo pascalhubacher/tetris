@@ -4,6 +4,9 @@ import tetris.gui.Block;
 import tetris.model.Figure;
 
 public class TFigure extends Figure{
+
+    private final int COLOR = 5;
+
     public TFigure(int x, int y) {
         super(x, y);
         blocks[0] = new Block(x - 1, y, COLOR);

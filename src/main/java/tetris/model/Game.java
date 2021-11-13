@@ -1,6 +1,7 @@
 package tetris.model;
 
 import tetris.gui.ActionEvent;
+import tetris.gui.ActionHandler;
 import tetris.gui.GUI;
 import tetris.model.figures.*;
 
@@ -48,14 +49,64 @@ public class Game {
     }
 
     /**
+     * Handles an action event by moving the block accordingly.
+     **/
+    private class FigureController implements ActionHandler {
+        /**
+         * Moves the figure down
+         */
+        @Override
+        public void moveDown() {
+            figure.move(0, -1);
+            updateGUI();
+        }
+        /**
+         * Moves the figure left
+         */
+        @Override
+        public void moveLeft() {
+            figure.move(-1, 0);
+            updateGUI();
+        }
+        /**
+         * Moves the figure right
+         */
+        @Override
+        public void moveRight() {
+            figure.move(1, 0);
+            updateGUI();
+        }
+        /**
+         * Rotates the figure
+         */
+        @Override
+        public void rotateLeft() {
+            figure.rotate(1);
+            updateGUI();
+        }
+        /**
+         * Rotates the figure
+         */
+        @Override
+        public void rotateRight() {
+            figure.rotate(-1);
+            updateGUI();
+        }
+        /**
+         * deletes the figure
+         */
+        @Override
+        public void drop() {
+            updateGUI();
+        }
+    }
+
+    /**
      * Starts the game by creating a block and waiting for action events.
      */
     public void start() {
         createFigure();
-        while (true) {
-            ActionEvent event = gui.waitEvent();
-            handleEvent(event);
-        }
+        gui.setActionHandler(new FigureController());
     }
 
     private enum Figures {
@@ -72,7 +123,6 @@ public class Game {
         }
     }
 
-
     public void createFigure() {
         // create a random figure
         //figure = new Figure((width - 1) / 2, height - 1);
@@ -86,22 +136,6 @@ public class Game {
             case ZFigure -> new ZFigure((width - 1) / 2, height - 1);
         };
         //figure = new JFigure((width - 1) / 2, height - 1);
-        updateGUI();
-    }
-
-    /**
-     * Handles an action event by moving the block accordingly.
-     *
-     * @param event the event to handle
-     */
-    private void handleEvent(ActionEvent event) {
-        switch (event) {
-            case MOVE_DOWN -> figure.move(0, -1);
-            case MOVE_LEFT -> figure.move(-1, 0);
-            case MOVE_RIGHT -> figure.move(1, 0);
-            case ROTATE_LEFT -> figure.rotate(1);
-            case ROTATE_RIGHT -> figure.rotate(-1);
-        }
         updateGUI();
     }
 
