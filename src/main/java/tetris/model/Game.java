@@ -1,6 +1,5 @@
 package tetris.model;
 
-import tetris.gui.ActionEvent;
 import tetris.gui.ActionHandler;
 import tetris.gui.GUI;
 import tetris.model.figures.*;
@@ -132,6 +131,15 @@ public class Game {
          */
         @Override
         public void drop() {
+            try {
+                // move 1 by 1 down until the CollisionException is thrown
+                for (int i = 1; i <= height; i++) {
+                    figure.move(0, -1);
+                    field.detectCollision(figure.getBlocks());
+                }
+            } catch (CollisionException e) {
+                figure.move(0, 1);
+            }
             updateGUI();
         }
     }
@@ -162,8 +170,8 @@ public class Game {
     public void createFigure() {
         // create a random figure
         figure = switch (Figures.getRandomFigure()) {
-            case IFigure -> new IFigure((width - 1) / 2, height );
-            case JFigure -> new JFigure((width - 1) / 2, height );
+            case IFigure -> new IFigure((width - 1) / 2, height);
+            case JFigure -> new JFigure((width - 1) / 2, height);
             case LFigure -> new LFigure((width - 1) / 2, height);
             case OFigure -> new OFigure((width - 1) / 2, height);
             case SFigure -> new SFigure((width - 1) / 2, height);
