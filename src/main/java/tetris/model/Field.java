@@ -4,21 +4,27 @@ import tetris.gui.Block;
 
 public class Field {
 
+    private final int height;
+    private final int width;
+
     /**
      * The elements of the field.
      */
     protected final int[][] field;
 
     public Field(int height, int width) {
+        this.height = height;
+        this.width = width;
         this.field = new int[height][width];
     }
 
-    public void getWith() {
+    public int getWidth() {
+        return width;
 
     }
 
-    public void getHeight() {
-
+    public int getHeight() {
+        return height;
     }
 
     /**
@@ -36,11 +42,9 @@ public class Field {
                 throw new CollisionException("Figure hit the left border.");
             }
             // Figure hit the right border
-            if (block.x > field[0].length - 1) {
+            if (block.x > getWidth() - 1) {
                 throw new CollisionException("Figure hit the right border.");
             }
         }
-
     }
-
 }
