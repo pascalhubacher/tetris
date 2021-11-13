@@ -36,6 +36,11 @@ public class Game {
     private Figure figure;
 
     /**
+     * The field of the game.
+     */
+    private Field field;
+
+    /**
      * Constructs a game with the specified graphical user interface.
      *
      * @param width  the width of the field
@@ -58,40 +63,70 @@ public class Game {
         @Override
         public void moveDown() {
             figure.move(0, -1);
+            try {
+                field.detectCollision(figure.getBlocks());
+            } catch (CollisionException e) {
+                figure.move(0, 1);
+            }
             updateGUI();
         }
+
         /**
          * Moves the figure left
          */
         @Override
         public void moveLeft() {
             figure.move(-1, 0);
+            try {
+                field.detectCollision(figure.getBlocks());
+            } catch (CollisionException e) {
+                figure.move(1, 0);
+            }
             updateGUI();
         }
+
         /**
          * Moves the figure right
          */
         @Override
         public void moveRight() {
             figure.move(1, 0);
+            try {
+                field.detectCollision(figure.getBlocks());
+            } catch (CollisionException e) {
+                figure.move(-1, 0);
+            }
             updateGUI();
         }
+
         /**
          * Rotates the figure
          */
         @Override
         public void rotateLeft() {
             figure.rotate(1);
+            try {
+                field.detectCollision(figure.getBlocks());
+            } catch (CollisionException e) {
+                figure.rotate(-1);
+            }
             updateGUI();
         }
+
         /**
          * Rotates the figure
          */
         @Override
         public void rotateRight() {
             figure.rotate(-1);
+            try {
+                field.detectCollision(figure.getBlocks());
+            } catch (CollisionException e) {
+                figure.rotate(1);
+            }
             updateGUI();
         }
+
         /**
          * deletes the figure
          */
@@ -105,6 +140,7 @@ public class Game {
      * Starts the game by creating a block and waiting for action events.
      */
     public void start() {
+        field = new Field(height, width);
         createFigure();
         gui.setActionHandler(new FigureController());
     }
@@ -125,15 +161,14 @@ public class Game {
 
     public void createFigure() {
         // create a random figure
-        //figure = new Figure((width - 1) / 2, height - 1);
         figure = switch (Figures.getRandomFigure()) {
-            case IFigure -> new IFigure((width - 1) / 2, height - 1);
-            case JFigure -> new JFigure((width - 1) / 2, height - 1);
-            case LFigure -> new LFigure((width - 1) / 2, height - 1);
-            case OFigure -> new OFigure((width - 1) / 2, height - 1);
-            case SFigure -> new SFigure((width - 1) / 2, height - 1);
-            case TFigure -> new TFigure((width - 1) / 2, height - 1);
-            case ZFigure -> new ZFigure((width - 1) / 2, height - 1);
+            case IFigure -> new IFigure((width - 1) / 2, height );
+            case JFigure -> new JFigure((width - 1) / 2, height );
+            case LFigure -> new LFigure((width - 1) / 2, height);
+            case OFigure -> new OFigure((width - 1) / 2, height);
+            case SFigure -> new SFigure((width - 1) / 2, height);
+            case TFigure -> new TFigure((width - 1) / 2, height);
+            case ZFigure -> new ZFigure((width - 1) / 2, height);
         };
         //figure = new JFigure((width - 1) / 2, height - 1);
         updateGUI();
