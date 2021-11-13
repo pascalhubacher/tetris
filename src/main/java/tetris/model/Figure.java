@@ -11,21 +11,8 @@ public abstract class Figure {
      */
     protected final Block[] blocks = new Block[4];
 
-    /**
-     * The Color of the figure.
-     */
-    public final int COLOR;
-
     public Figure(int x, int y) {
-        Random random = new Random();
-        this.COLOR = random.nextInt(0, 7);
-        /*
-        // S
-        blocks[0] = new Block(x - 1, y, COLOR);
-        blocks[1] = new Block(x, y, COLOR);
-        blocks[2] = new Block(x, y + 1, COLOR);
-        blocks[3] = new Block(x + 1, y + 1, COLOR);
-        */
+
     }
 
     /**
