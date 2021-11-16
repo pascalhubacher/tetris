@@ -18,10 +18,7 @@ public class Field {
         this.field = new int[height][width];
     }
 
-    public int getWidth() {
-        return width;
-
-    }
+    public int getWidth() { return width; }
 
     public int getHeight() {
         return height;
@@ -42,7 +39,7 @@ public class Field {
                 throw new CollisionException("Figure hit the left border.");
             }
             // Figure hit the right border
-            if (block.x > getWidth() - 1) {
+            if (block.x >= getWidth() ) {
                 throw new CollisionException("Figure hit the right border.");
             }
         }
