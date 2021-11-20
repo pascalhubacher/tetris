@@ -53,9 +53,16 @@ public class Field {
                 throw new CollisionException("Figure hit the left border.");
             }
             // Figure hit the right border
-            if (block.x >= getWidth() ) {
+            if (block.x >= getWidth()) {
                 throw new CollisionException("Figure hit the right border.");
+            }
+            // check if it collides with an existing block
+            for (Block blockInField : blocksInField) {
+                if (blockInField.x == block.x && blockInField.y == block.y) {
+                    throw new CollisionException("Figure hit other figures.");
+                }
             }
         }
     }
 }
+
