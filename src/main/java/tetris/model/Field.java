@@ -2,26 +2,40 @@ package tetris.model;
 
 import tetris.gui.Block;
 
+import java.util.ArrayList;
+
 public class Field {
 
     private final int height;
     private final int width;
 
-    /**
-     * The elements of the field.
-     */
-    protected final int[][] field;
+    private ArrayList<Block> blocksInField  = new ArrayList<>();;
 
     public Field(int height, int width) {
         this.height = height;
         this.width = width;
-        this.field = new int[height][width];
     }
 
-    public int getWidth() { return width; }
+    public int getWidth() {
+        return width;
+    }
 
     public int getHeight() {
         return height;
+    }
+
+    public ArrayList<Block> getBlocks() {
+        return blocksInField;
+    }
+
+    public void addBlocks(Block[] blocks) {
+        for (Block block : blocks) {
+            blocksInField.add(block);
+        }
+    }
+
+    public void removeAllBlocks() {
+        blocksInField.clear();
     }
 
     /**
