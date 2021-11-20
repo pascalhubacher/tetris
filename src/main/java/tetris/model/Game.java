@@ -1,6 +1,7 @@
 package tetris.model;
 
 import tetris.gui.ActionHandler;
+import tetris.gui.Block;
 import tetris.gui.GUI;
 import tetris.model.figures.*;
 
@@ -64,10 +65,11 @@ public class Game {
             figure.move(0, -1);
             try {
                 field.detectCollision(figure.getBlocks());
+                updateGUI();
             } catch (CollisionException e) {
                 figure.move(0, 1);
+                figureLanded();
             }
-            updateGUI();
         }
 
         /**
@@ -78,10 +80,10 @@ public class Game {
             figure.move(-1, 0);
             try {
                 field.detectCollision(figure.getBlocks());
+                updateGUI();
             } catch (CollisionException e) {
                 figure.move(1, 0);
             }
-            updateGUI();
         }
 
         /**
@@ -92,10 +94,10 @@ public class Game {
             figure.move(1, 0);
             try {
                 field.detectCollision(figure.getBlocks());
+                updateGUI();
             } catch (CollisionException e) {
                 figure.move(-1, 0);
             }
-            updateGUI();
         }
 
         /**
@@ -106,10 +108,10 @@ public class Game {
             figure.rotate(1);
             try {
                 field.detectCollision(figure.getBlocks());
+                updateGUI();
             } catch (CollisionException e) {
                 figure.rotate(-1);
             }
-            updateGUI();
         }
 
         /**
@@ -120,10 +122,10 @@ public class Game {
             figure.rotate(-1);
             try {
                 field.detectCollision(figure.getBlocks());
+                updateGUI();
             } catch (CollisionException e) {
                 figure.rotate(1);
             }
-            updateGUI();
         }
 
         /**
@@ -150,9 +152,28 @@ public class Game {
     public void start() {
         field = new Field(height, width);
         createFigure();
+        updateGUI();
         gui.setActionHandler(new FigureController());
     }
 
+    public void figureLanded() {
+        field.addBlocks(figure.getBlocks());
+        try {
+            createFigure();
+            field.detectCollision(figure.getBlocks());
+            updateGUI();
+        } catch (CollisionException e) {
+            stop();
+        }
+    }
+
+    private void stop() {
+        //gui.setActionHandler();
+    }
+
+    /**
+     * Enum of all possible figures.
+     */
     private enum Figures {
         IFigure, JFigure, LFigure, OFigure, SFigure, TFigure, ZFigure;
 
@@ -167,6 +188,9 @@ public class Game {
         }
     }
 
+    /**
+     * Creates a figure on a random basis
+     */
     public void createFigure() {
         // create a random figure
         figure = switch (Figures.getRandomFigure()) {
@@ -179,7 +203,7 @@ public class Game {
             case ZFigure -> new ZFigure((width - 1) / 2, height);
         };
         //figure = new JFigure((width - 1) / 2, height - 1);
-        updateGUI();
+        //updateGUI();
     }
 
     /**
@@ -188,5 +212,6 @@ public class Game {
     private void updateGUI() {
         gui.clear();
         gui.drawBlocks(figure.getBlocks());
+        gui.drawBlocks(field.getBlocks());
     }
 }
