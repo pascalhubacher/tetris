@@ -168,6 +168,7 @@ public class Game {
     }
 
     private void stop() {
+        // unregister figureController missing
         //gui.setActionHandler();
     }
 
