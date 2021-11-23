@@ -2,14 +2,16 @@ package tetris.model;
 
 import tetris.gui.Block;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Field {
 
     private final int height;
     private final int width;
 
-    private ArrayList<Block> blocksInField  = new ArrayList<>();;
+    // hashSet oder hashMap
+    private List<Block> blocksInField  = new LinkedList<>();;
 
     public Field(int height, int width) {
         this.height = height;
@@ -24,7 +26,7 @@ public class Field {
         return height;
     }
 
-    public ArrayList<Block> getBlocks() {
+    public List<Block> getBlocks() {
         return blocksInField;
     }
 
