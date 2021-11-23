@@ -6,6 +6,10 @@ import tetris.gui.GUI;
 import tetris.model.figures.*;
 
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import static java.lang.Thread.*;
 
 /**
  * The class Game implements the Tetris game.
@@ -40,6 +44,8 @@ public class Game {
      */
     private Field field;
 
+    private static final Logger LOGGER = Logger.getLogger("Game.class");
+
     /**
      * Constructs a game with the specified graphical user interface.
      *
@@ -51,7 +57,9 @@ public class Game {
         this.width = width;
         this.height = height;
         this.gui = gui;
+        field = new Field(height, width);
     }
+
 
     /**
      * Handles an action event by moving the block accordingly.
@@ -62,8 +70,8 @@ public class Game {
          */
         @Override
         public void moveDown() {
-            figure.move(0, -1);
             try {
+                figure.move(0, -1);
                 field.detectCollision(figure.getBlocks());
                 updateGUI();
             } catch (CollisionException e) {
@@ -150,26 +158,27 @@ public class Game {
      * Starts the game by creating a block and waiting for action events.
      */
     public void start() {
-        field = new Field(height, width);
-        createFigure();
-        updateGUI();
-        gui.setActionHandler(new FigureController());
-    }
-
-    public void figureLanded() {
-        field.addBlocks(figure.getBlocks());
+        FigureController figureController = new FigureController();
+        gui.setActionHandler(figureController);
         try {
             createFigure();
             field.detectCollision(figure.getBlocks());
             updateGUI();
+            figureController.moveDown();
         } catch (CollisionException e) {
             stop();
         }
     }
 
+    public void figureLanded() {
+        field.addBlocks(figure.getBlocks());
+        start();
+    }
+
     private void stop() {
-        // unregister figureController missing
-        //gui.setActionHandler();
+        LOGGER.log(Level.INFO, "stop() method");
+        gui.setActionHandler(null);
+        figure = null;
     }
 
     /**
@@ -195,13 +204,13 @@ public class Game {
     public void createFigure() {
         // create a random figure
         figure = switch (Figures.getRandomFigure()) {
-            case IFigure -> new IFigure((width - 1) / 2, height);
-            case JFigure -> new JFigure((width - 1) / 2, height);
-            case LFigure -> new LFigure((width - 1) / 2, height);
-            case OFigure -> new OFigure((width - 1) / 2, height);
-            case SFigure -> new SFigure((width - 1) / 2, height);
-            case TFigure -> new TFigure((width - 1) / 2, height);
-            case ZFigure -> new ZFigure((width - 1) / 2, height);
+            case IFigure -> new IFigure((width - 1) / 2, height - 1);
+            case JFigure -> new JFigure((width - 1) / 2, height - 1);
+            case LFigure -> new LFigure((width - 1) / 2, height - 1);
+            case OFigure -> new OFigure((width - 1) / 2, height - 1);
+            case SFigure -> new SFigure((width - 1) / 2, height - 1);
+            case TFigure -> new TFigure((width - 1) / 2, height - 1);
+            case ZFigure -> new ZFigure((width - 1) / 2, height - 1);
         };
         //figure = new JFigure((width - 1) / 2, height - 1);
         //updateGUI();
@@ -211,8 +220,9 @@ public class Game {
      * Updates the graphical user interface according to the current state of the game.
      */
     private void updateGUI() {
-        gui.clear();
-        gui.drawBlocks(figure.getBlocks());
         gui.drawBlocks(field.getBlocks());
+        if (figure != null){
+            gui.drawBlocks(figure.getBlocks());
+        }
     }
 }
