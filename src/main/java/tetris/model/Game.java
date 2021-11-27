@@ -172,6 +172,8 @@ public class Game {
 
     public void figureLanded() {
         field.addBlocks(figure.getBlocks());
+        field.removeFullRows(figure.getBlocks());
+        updateGUI();
         start();
     }
 
