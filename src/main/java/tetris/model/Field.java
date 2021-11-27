@@ -42,7 +42,7 @@ public class Field {
 
     public boolean isRowFull(int row) {
         int rowElementCount = 0;
-        for (Block blockInField : blocks) {
+        for (Block blockInField : this.blocks) {
             if (blockInField.y == row) {
                 rowElementCount += 1;
             }
@@ -73,8 +73,8 @@ public class Field {
         }
     }
 
-    public void removeFullRows(Block[] blocks) {
-        for (int i = 0; i < getHeight(); i++) {
+    public void removeFullRows() {
+        for (int i = getHeight(); i >= 0; i--) {
             if (isRowFull(i)) {
                 //remove row
                 removeRow(i);
