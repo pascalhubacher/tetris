@@ -5,7 +5,7 @@ import tetris.model.Figure;
 
 public class IFigure extends Figure {
 
-    private final int COLOR = 0;
+    private final int COLOR = 7;
 
     public IFigure(int x, int y) {
         super(x, y);
