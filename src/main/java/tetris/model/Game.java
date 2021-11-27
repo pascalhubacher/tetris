@@ -222,8 +222,9 @@ public class Game {
      * Updates the graphical user interface according to the current state of the game.
      */
     private void updateGUI() {
+        gui.clear();
         gui.drawBlocks(field.getBlocks());
-        if (figure != null){
+        if (figure != null) {
             gui.drawBlocks(figure.getBlocks());
         }
     }
