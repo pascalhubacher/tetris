@@ -54,6 +54,35 @@ public class Field {
         }
     }
 
+    public void removeRow(int row) {
+        Set<Block> newBlocksInField = new HashSet<>();
+        for (Block blockInField : this.blocks) {
+            if (blockInField.y > row) {
+                //move every block y-1 down
+                blockInField.y -= 1;
+                newBlocksInField.add(blockInField);
+            }
+            if (blockInField.y < row) {
+                newBlocksInField.add(blockInField);
+            }
+        }
+        this.removeAllBlocks();
+        // add all newly blocks
+        for (Block block : newBlocksInField) {
+            this.blocks.add(block);
+        }
+    }
+
+    public void removeFullRows(Block[] blocks) {
+        for (int i = 0; i < getHeight(); i++) {
+            if (isRowFull(i)) {
+                //remove row
+                removeRow(i);
+            }
+        }
+    }
+
+
     /**
      * prüft, ob Blöcke mit dem Spielfeldrand kollidieren und wenn ja,
      * eine CollisionException wirft.
