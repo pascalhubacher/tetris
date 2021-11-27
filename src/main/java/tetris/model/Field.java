@@ -2,8 +2,8 @@ package tetris.model;
 
 import tetris.gui.Block;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class Field {
 
@@ -11,7 +11,7 @@ public class Field {
     private final int width;
 
     // hashSet oder hashMap
-    private List<Block> blocksInField  = new LinkedList<>();;
+    private final Set<Block> blocks = new HashSet<>();
 
     public Field(int height, int width) {
         this.height = height;
@@ -26,18 +26,32 @@ public class Field {
         return height;
     }
 
-    public List<Block> getBlocks() {
-        return blocksInField;
+    public Set<Block> getBlocks() {
+        return blocks;
     }
 
     public void addBlocks(Block[] blocks) {
         for (Block block : blocks) {
-            blocksInField.add(block);
+            this.blocks.add(block);
         }
     }
 
     public void removeAllBlocks() {
-        blocksInField.clear();
+        blocks.clear();
+    }
+
+    public boolean isRowFull(int row) {
+        int rowElementCount = 0;
+        for (Block blockInField : blocks) {
+            if (blockInField.y == row) {
+                rowElementCount += 1;
+            }
+        }
+        if (rowElementCount == getWidth()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -59,7 +73,7 @@ public class Field {
                 throw new CollisionException("Figure hit the right border.");
             }
             // check if it collides with an existing block
-            for (Block blockInField : blocksInField) {
+            for (Block blockInField : this.blocks) {
                 if (blockInField.x == block.x && blockInField.y == block.y) {
                     throw new CollisionException("Figure hit other figures.");
                 }
