@@ -206,15 +206,15 @@ public class Game {
     public void createFigure() {
         // create a random figure
         figure = switch (Figures.getRandomFigure()) {
-            case IFigure -> new IFigure((width - 1) / 2, height - 1);
-            case JFigure -> new JFigure((width - 1) / 2, height - 1);
-            case LFigure -> new LFigure((width - 1) / 2, height - 1);
-            case OFigure -> new OFigure((width - 1) / 2, height - 1);
-            case SFigure -> new SFigure((width - 1) / 2, height - 1);
-            case TFigure -> new TFigure((width - 1) / 2, height - 1);
-            case ZFigure -> new ZFigure((width - 1) / 2, height - 1);
+            case IFigure -> new IFigure((width - 1) / 2, height);
+            case JFigure -> new JFigure((width - 1) / 2, height);
+            case LFigure -> new LFigure((width - 1) / 2, height);
+            case OFigure -> new OFigure((width - 1) / 2, height);
+            case SFigure -> new SFigure((width - 1) / 2, height);
+            case TFigure -> new TFigure((width - 1) / 2, height);
+            case ZFigure -> new ZFigure((width - 1) / 2, height);
         };
-        //figure = new JFigure((width - 1) / 2, height - 1);
+        //figure = new OFigure((width - 1) / 2, height - 1);
         //updateGUI();
     }
 

@@ -11,10 +11,10 @@ public class JFigure extends Figure {
 
     public JFigure(int x, int y) {
         super(x, y);
-        blocks[0] = new Block(x - 1, y, COLOR);
-        blocks[1] = new Block(x, y, COLOR);
+        blocks[0] = new Block(x - 1, y-1, COLOR);
+        blocks[1] = new Block(x, y-1, COLOR);
         blocks[2] = new Block(x + 1, y, COLOR);
-        blocks[3] = new Block(x + 1, y - 1, COLOR);
+        blocks[3] = new Block(x + 1, y-1, COLOR);
         rotateBlock[0] = blocks[1].x;
         rotateBlock[1] = blocks[1].y - 1;
     }
