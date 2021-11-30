@@ -3,6 +3,7 @@ package tetris.model;
 import tetris.gui.Block;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 public class Field {
@@ -47,14 +48,31 @@ public class Field {
                 rowElementCount += 1;
             }
         }
-        if (rowElementCount == getWidth()) {
-            return true;
-        } else {
-            return false;
-        }
+        return (rowElementCount == getWidth());
     }
 
     public void removeRow(int row) {
+        /*
+        // iterator
+        Iterator<Block> iter = blocks.iterator();
+        while (iter.hasNext()){
+            Block b = iter.next();
+            if (b.y == row) {
+                iter.remove(); //geht nur mit einem iterator
+            } else if (b.y > row) {
+                b.y--;
+            }
+        }
+
+        // lambda expression
+        blocks.removeIf(block -> block.y == row);
+        blocks.forEach(block -> {
+            if (block.y > row) block.y--;
+        });
+
+        */
+
+        // create new list
         Set<Block> newBlocksInField = new HashSet<>();
         for (Block blockInField : this.blocks) {
             if (blockInField.y > row) {
@@ -67,17 +85,19 @@ public class Field {
             }
         }
         this.removeAllBlocks();
-        // add all newly blocks
+        // add all new blocks
         for (Block block : newBlocksInField) {
             this.blocks.add(block);
         }
     }
 
     public void removeFullRows() {
-        for (int i = getHeight(); i >= 0; i--) {
+        int nrows = 0;
+        for (int i = getHeight() - 1; i >= 0; i--) {
             if (isRowFull(i)) {
                 //remove row
                 removeRow(i);
+                nrows++;
             }
         }
     }
