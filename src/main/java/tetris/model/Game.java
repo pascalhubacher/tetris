@@ -158,23 +158,15 @@ public class Game {
      * Starts the game by creating a block and waiting for action events.
      */
     public void start() {
+        createFigure();
         FigureController figureController = new FigureController();
         gui.setActionHandler(figureController);
-        try {
-            createFigure();
-            field.detectCollision(figure.getBlocks());
-            updateGUI();
-            figureController.moveDown();
-        } catch (CollisionException e) {
-            stop();
-        }
     }
 
     public void figureLanded() {
         field.addBlocks(figure.getBlocks());
         field.removeFullRows();
-        updateGUI();
-        start();
+        createFigure();
     }
 
     private void stop() {
@@ -206,16 +198,24 @@ public class Game {
     public void createFigure() {
         // create a random figure
         figure = switch (Figures.getRandomFigure()) {
-            case IFigure -> new IFigure((width - 1) / 2, height);
-            case JFigure -> new JFigure((width - 1) / 2, height);
-            case LFigure -> new LFigure((width - 1) / 2, height);
-            case OFigure -> new OFigure((width - 1) / 2, height);
-            case SFigure -> new SFigure((width - 1) / 2, height);
-            case TFigure -> new TFigure((width - 1) / 2, height);
-            case ZFigure -> new ZFigure((width - 1) / 2, height);
+            case IFigure -> new IFigure((width - 1) / 2, height-1);
+            case JFigure -> new JFigure((width - 1) / 2, height-1);
+            case LFigure -> new LFigure((width - 1) / 2, height-1);
+            case OFigure -> new OFigure((width - 1) / 2, height-1);
+            case SFigure -> new SFigure((width - 1) / 2, height-1);
+            case TFigure -> new TFigure((width - 1) / 2, height-1);
+            case ZFigure -> new ZFigure((width - 1) / 2, height-1);
         };
         //figure = new OFigure((width - 1) / 2, height - 1);
         //updateGUI();
+
+        try {
+            field.detectCollision(figure.getBlocks());
+        } catch (CollisionException ex) {
+            stop();
+        }
+        updateGUI();
+
     }
 
     /**
