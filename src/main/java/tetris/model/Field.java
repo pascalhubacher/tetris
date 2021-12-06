@@ -91,7 +91,7 @@ public class Field {
         }
     }
 
-    public void removeFullRows() {
+    public int removeFullRows() {
         int nrows = 0;
         for (int i = getHeight() - 1; i >= 0; i--) {
             if (isRowFull(i)) {
@@ -100,6 +100,7 @@ public class Field {
                 nrows++;
             }
         }
+        return nrows;
     }
 
 
