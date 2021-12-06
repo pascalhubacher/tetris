@@ -40,6 +40,12 @@ public class Game {
     private Figure figure;
 
     /**
+     * The scoreing of the game.
+     */
+    private Scoring scoring;
+    private int lines;
+
+    /**
      * The field of the game.
      */
     private Field field;
@@ -58,6 +64,8 @@ public class Game {
         this.height = height;
         this.gui = gui;
         field = new Field(height, width);
+        this.scoring = new Scoring();
+        this.lines = 0;
     }
 
 
@@ -161,11 +169,36 @@ public class Game {
         createFigure();
         FigureController figureController = new FigureController();
         gui.setActionHandler(figureController);
+        updateGUI();
     }
 
     public void figureLanded() {
         field.addBlocks(figure.getBlocks());
-        field.removeFullRows();
+
+        //Das Entfernen von 1, 2, 3 oder 4 vollen Zeilen ergibt 40, 100, 300 bzw. 1200 Punkte.
+        switch(field.removeFullRows()) {
+            case 1:
+                lines += 1;
+                scoring.updateScore(40);
+                break;
+            case 2:
+                lines += 2;
+                scoring.updateScore(100);
+                break;
+            case 3:
+                lines += 3;
+                scoring.updateScore(300);
+                break;
+            case 4:
+                lines += 4;
+                scoring.updateScore(1200);
+                break;
+        }
+        //Nach dem Entfernen von jeweils 10 vollen Zeilen, wird die Spielstufe erhöht und die Figuren fallen schneller.
+        if (lines >= 10) {
+            scoring.updateLevel();
+            lines -= 10;
+        }
         createFigure();
     }
 
@@ -173,6 +206,10 @@ public class Game {
         LOGGER.log(Level.INFO, "stop() method");
         gui.setActionHandler(null);
         figure = null;
+        // save highscore
+        if (scoring.getScore() > scoring.getHighScore()) {
+           scoring.saveHighScore();
+        }
     }
 
     /**
@@ -198,16 +235,15 @@ public class Game {
     public void createFigure() {
         // create a random figure
         figure = switch (Figures.getRandomFigure()) {
-            case IFigure -> new IFigure((width - 1) / 2, height-1);
-            case JFigure -> new JFigure((width - 1) / 2, height-1);
-            case LFigure -> new LFigure((width - 1) / 2, height-1);
-            case OFigure -> new OFigure((width - 1) / 2, height-1);
-            case SFigure -> new SFigure((width - 1) / 2, height-1);
-            case TFigure -> new TFigure((width - 1) / 2, height-1);
-            case ZFigure -> new ZFigure((width - 1) / 2, height-1);
+            case IFigure -> new IFigure((width - 1) / 2, height - 1);
+            case JFigure -> new JFigure((width - 1) / 2, height - 1);
+            case LFigure -> new LFigure((width - 1) / 2, height - 1);
+            case OFigure -> new OFigure((width - 1) / 2, height - 1);
+            case SFigure -> new SFigure((width - 1) / 2, height - 1);
+            case TFigure -> new TFigure((width - 1) / 2, height - 1);
+            case ZFigure -> new ZFigure((width - 1) / 2, height - 1);
         };
-        //figure = new OFigure((width - 1) / 2, height - 1);
-        //updateGUI();
+        figure = new IFigure((width - 1) / 2, height - 1);
 
         try {
             field.detectCollision(figure.getBlocks());
@@ -227,5 +263,8 @@ public class Game {
         if (figure != null) {
             gui.drawBlocks(figure.getBlocks());
         }
+        gui.setLevel(scoring.getLevel());
+        gui.setScore(scoring.getScore());
+        gui.setHighScore(scoring.getHighScore());
     }
 }
