@@ -1,15 +1,12 @@
 package tetris.model;
 
 import tetris.gui.ActionHandler;
-// import tetris.gui.Block;
 import tetris.gui.GUI;
 import tetris.model.figures.*;
 
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-// import static java.lang.Thread.*;
 
 /**
  * The class Game implements the Tetris game.
@@ -76,12 +73,34 @@ public class Game {
     /**
      * Handles an action event by moving the block accordingly.
      **/
-    private class FigureController implements ActionHandler {
+    private class FigureController extends Thread implements ActionHandler {
+        /**
+         * Moves the figure automatically down
+         */
+        @Override
+        public void run() {
+            while (true) {
+                try {
+                    try {
+                        Thread.sleep(1100 - (scoring.getLevel() * 100L));
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                    figure.move(0, -1);
+                    field.detectCollision(figure.getBlocks());
+                    updateGUI();
+                } catch (CollisionException e) {
+                    figure.move(0, 1);
+                    figureLanded();
+                }
+            }
+        }
+
         /**
          * Moves the figure down
          */
         @Override
-        public void moveDown() {
+        public synchronized void moveDown() {
             try {
                 figure.move(0, -1);
                 field.detectCollision(figure.getBlocks());
@@ -96,7 +115,7 @@ public class Game {
          * Moves the figure left
          */
         @Override
-        public void moveLeft() {
+        public synchronized void moveLeft() {
             figure.move(-1, 0);
             try {
                 field.detectCollision(figure.getBlocks());
@@ -110,7 +129,7 @@ public class Game {
          * Moves the figure right
          */
         @Override
-        public void moveRight() {
+        public synchronized void moveRight() {
             figure.move(1, 0);
             try {
                 field.detectCollision(figure.getBlocks());
@@ -124,7 +143,7 @@ public class Game {
          * Rotates the figure
          */
         @Override
-        public void rotateLeft() {
+        public synchronized void rotateLeft() {
             figure.rotate(1);
             try {
                 field.detectCollision(figure.getBlocks());
@@ -138,7 +157,7 @@ public class Game {
          * Rotates the figure
          */
         @Override
-        public void rotateRight() {
+        public synchronized void rotateRight() {
             figure.rotate(-1);
             try {
                 field.detectCollision(figure.getBlocks());
@@ -152,7 +171,7 @@ public class Game {
          * deletes the figure
          */
         @Override
-        public void drop() {
+        public synchronized void drop() {
             try {
                 // move 1 by 1 down until the CollisionException is thrown
                 for (int i = 1; i <= height; i++) {
@@ -173,7 +192,8 @@ public class Game {
         createFigure();
         FigureController figureController = new FigureController();
         gui.setActionHandler(figureController);
-        updateGUI();
+        thread = new FigureController();
+        thread.start();
     }
 
     public void figureLanded() {
