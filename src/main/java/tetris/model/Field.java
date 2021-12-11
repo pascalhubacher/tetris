@@ -2,8 +2,8 @@ package tetris.model;
 
 import tetris.gui.Block;
 
+import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 public class Field {
@@ -32,9 +32,7 @@ public class Field {
     }
 
     public void addBlocks(Block[] blocks) {
-        for (Block block : blocks) {
-            this.blocks.add(block);
-        }
+        this.blocks.addAll(Arrays.asList(blocks));
     }
 
     public void removeAllBlocks() {
@@ -86,9 +84,7 @@ public class Field {
         }
         this.removeAllBlocks();
         // add all new blocks
-        for (Block block : newBlocksInField) {
-            this.blocks.add(block);
-        }
+        this.blocks.addAll(newBlocksInField);
     }
 
     public int removeFullRows() {
