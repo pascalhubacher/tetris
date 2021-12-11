@@ -1,7 +1,7 @@
 package tetris.model;
 
 import tetris.gui.ActionHandler;
-import tetris.gui.Block;
+// import tetris.gui.Block;
 import tetris.gui.GUI;
 import tetris.model.figures.*;
 
@@ -9,7 +9,7 @@ import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static java.lang.Thread.*;
+// import static java.lang.Thread.*;
 
 /**
  * The class Game implements the Tetris game.
@@ -40,15 +40,19 @@ public class Game {
     private Figure figure;
 
     /**
-     * The scoreing of the game.
+     * The scoring of the game.
      */
-    private Scoring scoring;
-    private int lines;
+    private final Scoring scoring;
 
     /**
      * The field of the game.
      */
-    private Field field;
+    private final Field field;
+
+    /**
+     * Thread to move down the figure
+     */
+    private FigureController thread;
 
     private static final Logger LOGGER = Logger.getLogger("Game.class");
 
@@ -65,7 +69,7 @@ public class Game {
         this.gui = gui;
         field = new Field(height, width);
         this.scoring = new Scoring();
-        this.lines = 0;
+        updateGUI();
     }
 
 
@@ -174,42 +178,17 @@ public class Game {
 
     public void figureLanded() {
         field.addBlocks(figure.getBlocks());
-
-        //Das Entfernen von 1, 2, 3 oder 4 vollen Zeilen ergibt 40, 100, 300 bzw. 1200 Punkte.
-        switch(field.removeFullRows()) {
-            case 1:
-                lines += 1;
-                scoring.updateScore(40);
-                break;
-            case 2:
-                lines += 2;
-                scoring.updateScore(100);
-                break;
-            case 3:
-                lines += 3;
-                scoring.updateScore(300);
-                break;
-            case 4:
-                lines += 4;
-                scoring.updateScore(1200);
-                break;
-        }
-        //Nach dem Entfernen von jeweils 10 vollen Zeilen, wird die Spielstufe erhöht und die Figuren fallen schneller.
-        if (lines >= 10) {
-            scoring.updateLevel();
-            lines -= 10;
-        }
+        scoring.updateScore(field.removeFullRows());
         createFigure();
     }
 
     private void stop() {
-        LOGGER.log(Level.INFO, "stop() method");
         gui.setActionHandler(null);
         figure = null;
-        // save highscore
-        if (scoring.getScore() > scoring.getHighScore()) {
-           scoring.saveHighScore();
-        }
+        // save highscore if needed
+        scoring.updateHighScore();
+        thread.interrupt();
+        LOGGER.log(Level.INFO, "stop() method");
     }
 
     /**
