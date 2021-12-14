@@ -99,7 +99,6 @@ public class Field {
         return nrows;
     }
 
-
     /**
      * prüft, ob Blöcke mit dem Spielfeldrand kollidieren und wenn ja,
      * eine CollisionException wirft.

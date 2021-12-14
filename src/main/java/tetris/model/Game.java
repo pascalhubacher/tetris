@@ -49,7 +49,7 @@ public class Game {
     /**
      * Thread to move down the figure
      */
-    private FigureController thread;
+    private FigureController figureController;
 
     private static final Logger LOGGER = Logger.getLogger("Game.class");
 
@@ -192,8 +192,7 @@ public class Game {
         createFigure();
         FigureController figureController = new FigureController();
         gui.setActionHandler(figureController);
-        thread = new FigureController();
-        thread.start();
+        figureController.start();
     }
 
     public void figureLanded() {
@@ -207,7 +206,7 @@ public class Game {
         figure = null;
         // save highscore if needed
         scoring.updateHighScore();
-        thread.interrupt();
+        figureController.interrupt();
         LOGGER.log(Level.INFO, "stop() method");
     }
 
