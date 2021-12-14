@@ -79,19 +79,12 @@ public class Game {
          */
         @Override
         public void run() {
-            while (true) {
+            while (!Thread.interrupted()) {
                 try {
-                    try {
-                        Thread.sleep(1100 - (scoring.getLevel() * 100L));
-                    } catch (InterruptedException e) {
-                        break;
-                    }
-                    figure.move(0, -1);
-                    field.detectCollision(figure.getBlocks());
-                    updateGUI();
-                } catch (CollisionException e) {
-                    figure.move(0, 1);
-                    figureLanded();
+                    Thread.sleep(1000 - scoring.getLevel() * 100L);
+                    moveDown();
+                } catch (InterruptedException e) {
+                    break;
                 }
             }
         }
@@ -241,7 +234,7 @@ public class Game {
             case TFigure -> new TFigure((width - 1) / 2, height - 1);
             case ZFigure -> new ZFigure((width - 1) / 2, height - 1);
         };
-        figure = new IFigure((width - 1) / 2, height - 1);
+        //figure = new IFigure((width - 1) / 2, height - 1);
 
         try {
             field.detectCollision(figure.getBlocks());
